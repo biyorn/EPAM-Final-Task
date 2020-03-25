@@ -1,0 +1,75 @@
+create database cafe;
+use cafe;
+create table users (
+	id INT primary key auto_increment,
+    login VARCHAR(15) not null,
+    pass VARCHAR(32) not null,
+    balance decimal(10,2) not null,
+    points SMALLINT,
+    role ENUM('admin', 'manager', 'user') not null,
+    blocked TINYINT(1)
+);
+create table orders (
+	id INT primary key auto_increment,
+    user_id INT not null,
+    time VARCHAR(10),
+    status ENUM('new', 'paid', 'cancel')  not null,
+    type ENUM('order', 'pre order') not null,
+    payment ENUM('account', 'cash') not null,
+    review VARCHAR(255) null,
+    foreign key(user_id) references users (id)
+);
+create table meals (
+	id INT primary key auto_increment,
+    image VARCHAR(100) not null,
+    name VARCHAR(30) not null,
+    description TEXT not null,
+    price DECIMAL(8,2) not null
+);
+create table order_meal (
+	order_id INT primary key,
+    meal_id INT not null,
+    amount TINYINT not null,
+    foreign key (order_id) references orders (id),
+    foreign key (meal_id) references meals (id)
+);
+insert into users (login, pass, balance, role, blocked) values ('admin', '202cb962ac59075b964b07152d234b70', '0', 'admin', '0');
+insert into users (login, pass, balance, role, blocked) values ('manager', '81dc9bdb52d04dc20036dbd8313ed055', '0','manager', '0');
+insert into users (login, pass, balance, points, role, blocked) values ('user', '827ccb0eea8a706c4c34a16891f84e7b', '100', '5', 'user', '0');
+insert into meals (image, name, description, price) values 
+					('meal-1.jpg', 'first', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Amet officia natus temporibus aperiam placeat iusto voluptates
+                    quibusdam minus culpa totam!', '20'),
+                    ('meal-2.jpg', 'second', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Amet officia natus temporibus aperiam placeat iusto voluptates
+                    quibusdam minus culpa totam!', '15'),
+                    ('meal-3.jpg', 'third', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Amet officia natus temporibus aperiam placeat iusto voluptates
+                    quibusdam minus culpa totam!', '25'),
+                    ('meal-4.jpg', 'fourth', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Amet officia natus temporibus aperiam placeat iusto voluptates
+                    quibusdam minus culpa totam!', '30'),
+					('meal-5.jpg', 'Baked berry cake', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Amet officia natus temporibus aperiam placeat iusto voluptates
+                    quibusdam minus culpa totam!', '24'),
+                    ('meal-6.jpg', 'Caffeine', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Amet officia natus temporibus aperiam placeat iusto voluptates
+                    quibusdam minus culpa totam!', '39'),
+                    ('meal-7.jpg', 'Bread & egg', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Amet officia natus temporibus aperiam placeat iusto voluptates
+                    quibusdam minus culpa totam!', '22.22'),
+                    ('meal-8.jpg', 'Banana', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Amet officia natus temporibus aperiam placeat iusto voluptates
+                    quibusdam minus culpa totam!', '5.99'),
+                    ('meal-9.jpg', 'Bagel', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Amet officia natus temporibus aperiam placeat iusto voluptates
+                    quibusdam minus culpa totam!', '14.33'),
+                    ('meal-10.jpg', 'fourth', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Amet officia natus temporibus aperiam placeat iusto voluptates
+                    quibusdam minus culpa totam!', '11.25'),
+                    ('meal-11.jpg', 'Bacon Blackberries', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Amet officia natus temporibus aperiam placeat iusto voluptates
+                    quibusdam minus culpa totam!', '22'),
+                    ('meal-12.jpg', 'Black coffee bread', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Amet officia natus temporibus aperiam placeat iusto voluptates
+                    quibusdam minus culpa totam!', '40');
